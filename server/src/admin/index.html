@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Chat 管理台</title>
+    <link rel="stylesheet" href="/admin/assets/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Voice Chat 管理台</h1>
+        <div id="adminInfo">未登录</div>
+      </header>
+      <section id="loginPanel" class="card">
+        <h2>管理员登录</h2>
+        <div class="row">
+          <input id="username" placeholder="管理员账号" />
+          <input id="password" type="password" placeholder="管理员密码" />
+          <button id="loginBtn">登录</button>
+        </div>
+      </section>
+      <section id="dashboard" class="card hidden">
+        <div id="statsBar" class="stats-grid">
+          <div class="stat-card"><span>用户总数</span><strong id="usersTotal">0</strong></div>
+          <div class="stat-card"><span>在线用户</span><strong id="onlineUsers">0</strong></div>
+          <div class="stat-card"><span>房间总数</span><strong id="roomsTotal">0</strong></div>
+          <div class="stat-card"><span>消息总数</span><strong id="messagesTotal">0</strong></div>
+          <div class="stat-card"><span>近24h消息</span><strong id="messages24h">0</strong></div>
+          <div class="stat-card"><span>封禁用户</span><strong id="bannedUsers">0</strong></div>
+          <div class="stat-card"><span>ICE服务器</span><strong id="rtcIceCount">0</strong></div>
+        </div>
+        <div class="toolbar">
+          <button id="tabUsersBtn">用户管理</button>
+          <button id="tabRoomsBtn">房间管理</button>
+          <button id="tabLogsBtn">审计日志</button>
+          <span class="spacer"></span>
+          <button id="refreshBtn">刷新</button>
+          <button id="logoutBtn">退出</button>
+        </div>
+        <div class="card sub-card">
+          <div class="toolbar compact">
+            <h3>RTC 配置</h3>
+            <span class="spacer"></span>
+            <button id="refreshRtcBtn" type="button">刷新 RTC 配置</button>
+          </div>
+          <pre id="rtcConfigText" class="rtc-config-view">尚未加载</pre>
+          <div class="rtc-config-editor">
+            <div class="toolbar compact">
+              <h3>编辑 ICE/TURN（JSON 数组）</h3>
+              <span class="spacer"></span>
+              <button id="saveRtcBtn" type="button">保存 RTC 配置</button>
+            </div>
+            <textarea id="rtcConfigInput" class="rtc-config-input" spellcheck="false"></textarea>
+            <div id="rtcConfigSaveState" class="desktop-shortcut-state">提示：留空保存将恢复为服务器默认配置</div>
+          </div>
+        </div>
+        <div id="usersView">
+          <div class="toolbar compact">
+            <input id="userSearchInput" placeholder="搜索用户名..." />
+            <button id="userSearchBtn">搜索</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>用户</th>
+                <th>角色</th>
+                <th>在线</th>
+                <th>封禁</th>
+                <th>已用时长(分)</th>
+                <th>上限(分)</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="userRows"></tbody>
+          </table>
+        </div>
+        <div id="roomsView" class="hidden">
+          <table>
+            <thead>
+              <tr>
+                <th>房间</th>
+                <th>创建者</th>
+                <th>状态</th>
+                <th>发言模式</th>
+                <th>主持人</th>
+                <th>在线人数</th>
+                <th>消息数</th>
+                <th>最后消息时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="roomRows"></tbody>
+          </table>
+          <div class="card sub-card">
+            <h3>房间消息预览</h3>
+            <ul id="roomMessagePreview"></ul>
+          </div>
+          <div class="card sub-card">
+            <h3>房间成员权限</h3>
+            <ul id="roomMemberList"></ul>
+          </div>
+        </div>
+        <div id="logsView" class="hidden">
+          <div class="toolbar">
+            <input id="logActionInput" placeholder="动作，如 room_delete" />
+            <input id="logAdminInput" placeholder="管理员ID" />
+            <input id="logFromInput" type="datetime-local" />
+            <input id="logToInput" type="datetime-local" />
+            <select id="logTargetTypeInput">
+              <option value="">全部目标</option>
+              <option value="user">user</option>
+              <option value="room">room</option>
+            </select>
+            <button id="logFilterBtn">筛选</button>
+            <button id="logResetBtn">重置</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>管理员</th>
+                <th>动作</th>
+                <th>目标</th>
+                <th>详情</th>
+              </tr>
+            </thead>
+            <tbody id="logRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/admin/assets/app.js"></script>
+  </body>
+</html>
